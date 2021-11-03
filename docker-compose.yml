@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  controller:
+    build: controller/
+    networks:
+      - management
+
+  # node 1
+  forwarder_1:
+    build: forwarder/
+    networks:
+      - management
+      - link_1-2
+
+  application_1:
+    build: application/
+    network_mode: "service:forwarder_1"
+    environment:
+      - DESTINATION=node_2
+      
+
+  # node 2
+  forwarder_2:
+    build: forwarder/
+    networks:
+      - management
+      - link_1-2
+
+  application_2:
+    build: application/
+    network_mode: "service:forwarder_2"
+    environment:
+      - DESTINATION=node_1
+
+
+  # Traffic capture
+  pcap:
+    image: corfr/tcpdump
+    networks:
+      - management
+      - link_1-2
+    volumes:
+      - "./pcap:/data"
+
+networks:
+  management:
+  link_1-2:
+    # used for communication with the controller
+  # TODO: add individual links here in the future?
