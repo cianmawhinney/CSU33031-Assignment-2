@@ -52,16 +52,17 @@ A protocol to forward packets between applications on different networks, with f
 ## Header
 * Message type (1 byte)
   * (0) Forwarded packet
-  * Application registration
+  * (1) Application registration
     * Sent to its local forwarder when an application wants to become visible on the network
-  * Application de-registration
+  * (2) Application de-registration
     * Sent to its local forwarder when an application wants to remove itself from the network
-  * Forwarder registration
+  * (3) Forwarder registration
     * Outside the scope of the assignment
-  * Forwarder de-registration
+  * (4) Forwarder de-registration
     * Outside the scope of the assignment
-  * Routing table change
+  * (5) Routing table change
     * Sent by the controller
+* Number of TLV encoded fields (1 byte)
 * Source/Destination
   * Encoded as TLV
     * Source is type 1
