@@ -9,7 +9,6 @@ RUN npm install
 # Bundle source app
 COPY . .
 
-# FIXME: work out is this is the right port to use or not
 EXPOSE 51510
 
 CMD ["node", "controller.js"]
