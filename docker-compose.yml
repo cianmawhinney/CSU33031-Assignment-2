@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  controller:
-    build: controller/
-    networks:
-      - management
+  # controller:
+  #   build: controller/
+  #   networks:
+  #     - management
 
   # node 1
   forwarder_1:
@@ -48,7 +48,9 @@ services:
       - "./pcap:/data"
 
 networks:
+  # used for communication with the controller
   management:
+  
+  # networks being used as links between nodes in the topology
   link_1-2:
-    # used for communication with the controller
-  # TODO: add individual links here in the future?
+  # TODO: more complex topology
