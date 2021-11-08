@@ -24,7 +24,7 @@ p.on('forwardedPacket', (packet) => {
 function sendRandomInteger() {
   let payload = Buffer.alloc(4);
   payload.writeUInt32BE(Math.floor(Math.random() * 100000));
-  const obj = p.buildForwardedPacketObject('tempSource', dataDestination, payload);
+  const obj = p.buildForwardedPacketObject(process.env.HOSTNAME, dataDestination, payload);
   const packet = p.encodePacket(obj);
   client.send(packet, FORWARDER_PORT, 'localhost');
   console.log('Sending', payload);

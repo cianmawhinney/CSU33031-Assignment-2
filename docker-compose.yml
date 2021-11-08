@@ -24,6 +24,7 @@ services:
     network_mode: "service:forwarder_1"
     environment:
       - DESTINATION=application_2
+      - HOSTNAME=application_1
       
 
   # node 2
@@ -44,6 +45,7 @@ services:
     network_mode: "service:forwarder_2"
     environment:
       - DESTINATION=application_1
+      - HOSTNAME=application_2
 
   # node 3
   forwarder_3:
