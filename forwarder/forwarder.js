@@ -1,16 +1,42 @@
+const { assert, log } = require('console');
 const dgram = require('dgram');
 const Protocol = require('flow-protocol');
 
-const p = new Protocol();
+const LISTENING_PORT = 51510;
 
-// message type, arg length, source id, source id length, 'AA'
-let b = Buffer.from([0x01, 0x01, 0x01, 0x02, 0x41, 0x41]);
-let parsed = p.parse(b);
-console.log(JSON.stringify(parsed));
-let bNew = p.encode(parsed);
-console.log(bNew);
+const server = dgram.createSocket('udp4');
+server.bind(LISTENING_PORT);
 
-console.log("Hi, I'm the forwarder, I will be figuring out where to send data given to me");
+const routingTableFile = process.env.ROUTING_TABLE_FILE;
+assert(typeof routingTableFile === 'string');
 
-// wait for 10 seconds so that the program doesn't exit immediately
-setTimeout(() => {}, 10000);
+/**
+ * The routing table for the forwarder
+ * @constant {Object[]} routingTable
+ * @constant {String}   routingTable[].destinationString
+ * @constant {Boolean}  routingTable[].local
+ * @constant {Number}   routingTable[].port
+ * @constant {String}   routingTable[].nextHop
+ */
+const routingTable = require(routingTableFile);
+const p = new Protocol(server);
+
+
+/**
+ * @param {Packet} packet
+ */
+p.on('forwardedPacket', (packet) => {
+  let dest = packet.header.fields.find(field => field.type === Protocol.FIELD_TYPES.DESTINATION).value.destination;
+  let tableEntry = routingTable.find(entry => entry.destinationString === dest);
+    
+  if (tableEntry != undefined) {
+    if (tableEntry.local) {
+      // application local to forwarder, so send the payload to localhost:${tableEntry.port}
+      server.send(p.encodePacket(packet), tableEntry.port, 'localhost');
+    } else {
+      // application on remote forwarder, so send payload to ${tableEntry.nextHop}:LISTENING_PORT
+      server.send(p.encodePacket(packet), LISTENING_PORT, tableEntry.nextHop);
+    }
+  }
+  // drop packet if destination not found in routing table
+})

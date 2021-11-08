@@ -13,13 +13,17 @@ services:
       dockerfile: forwarder/Dockerfile
     networks:
       - management
-      - link_1-2
+      - link_1-3
+    environment:
+      - ROUTING_TABLE_FILE=./node1
 
   application_1:
-    build: application/
+    build:
+      context: .
+      dockerfile: application/Dockerfile
     network_mode: "service:forwarder_1"
     environment:
-      - DESTINATION=node_2
+      - DESTINATION=application_2
       
 
   # node 2
@@ -29,21 +33,35 @@ services:
       dockerfile: forwarder/Dockerfile
     networks:
       - management
-      - link_1-2
+      - link_2-3
+    environment:
+      - ROUTING_TABLE_FILE=./node2
 
   application_2:
-    build: application/
+    build:
+      context: .
+      dockerfile: application/Dockerfile
     network_mode: "service:forwarder_2"
     environment:
-      - DESTINATION=node_1
+      - DESTINATION=application_1
 
+  # node 3
+  forwarder_3:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_1-3
+      - link_2-3
+    environment:
+      - ROUTING_TABLE_FILE=./node3
 
   # Traffic capture
   pcap:
     image: corfr/tcpdump
-    networks:
-      - management
-      - link_1-2
+    network_mode: "service:forwarder_3"
+    command: -i any -w /data/capture.pcap
     volumes:
       - "./pcap:/data"
 
@@ -52,5 +70,6 @@ networks:
   management:
   
   # networks being used as links between nodes in the topology
-  link_1-2:
+  link_1-3:
+  link_2-3:
   # TODO: more complex topology
