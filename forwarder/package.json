@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "flow-protocol": "file:../flow-protocol"
+  }
+}

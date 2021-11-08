@@ -2,13 +2,13 @@ FROM node:slim
 
 WORKDIR /usr/src/app
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm install
-
 # Bundle source app
 COPY . .
 
+# Install app dependencies
+WORKDIR /usr/src/app/forwarder
+RUN npm install
+
 EXPOSE 51510
 
-CMD ["node", "index.js"]
+CMD ["node", "forwarder.js"]

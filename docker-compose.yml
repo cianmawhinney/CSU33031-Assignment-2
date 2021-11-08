@@ -8,7 +8,9 @@ services:
 
   # node 1
   forwarder_1:
-    build: forwarder/
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
     networks:
       - management
       - link_1-2
@@ -22,7 +24,9 @@ services:
 
   # node 2
   forwarder_2:
-    build: forwarder/
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
     networks:
       - management
       - link_1-2
