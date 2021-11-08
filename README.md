@@ -57,9 +57,11 @@ A protocol to forward packets between applications on different networks, with f
   * (2) Application de-registration
     * Sent to its local forwarder when an application wants to remove itself from the network
   * (3) Forwarder registration
-    * Outside the scope of the assignment
+    * Sent to the controller when the forwarder comes online
+    * Also transmitted are a list of other forwarders that it's connected directly to
   * (4) Forwarder de-registration
-    * Outside the scope of the assignment
+    * Sent to the controller when the forwarder removes itself from the network
+    * Any routes it's involved in will be removed from the controller
   * (5) Routing table change
     * Sent by the controller
 * Number of TLV encoded fields (1 byte)
