@@ -29,7 +29,8 @@ class Protocol extends EventEmitter {
 
   constructor(connection) {
     super();
-
+    
+    // For documentation see: https://github.com/Ericbla/binary-parser
     /**
      * A field contained within the packet
      * @typedef {Object} TLVField
