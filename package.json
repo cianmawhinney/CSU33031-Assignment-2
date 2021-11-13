@@ -7,7 +7,8 @@
     "binary-parser-encoder": "^1.5.3"
   },
   "devDependencies": {
-    "eslint": "^8.2.0"
+    "eslint": "^8.2.0",
+    "eslint-config-strongloop": "^2.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
