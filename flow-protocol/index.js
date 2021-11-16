@@ -1,3 +1,5 @@
+'use strict';
+
 const Parser = require('binary-parser-encoder').Parser;
 const EventEmitter = require('events');
 
@@ -13,8 +15,8 @@ class Protocol extends EventEmitter {
       APPLICATION_DEREGISTRATION: 2,
       FORWARDER_REGISTRATION: 3,
       FORWARDER_DEREGISTRATION: 4,
-      ROUTE_CHANGE: 5
-    }
+      ROUTE_CHANGE: 5,
+    };
   }
 
   /**
@@ -23,13 +25,13 @@ class Protocol extends EventEmitter {
   static get FIELD_TYPES() {
     return {
       SOURCE: 1,
-      DESTINATION: 2
-    }
+      DESTINATION: 2,
+    };
   }
 
   constructor(connection) {
     super();
-    
+
     // For documentation see: https://github.com/Ericbla/binary-parser
     /**
      * A field contained within the packet
@@ -45,7 +47,7 @@ class Protocol extends EventEmitter {
         choices: {
           1: Parser.start().uint8('len').string('source', {length: 'len'}),
           2: Parser.start().uint8('len').string('destination', {length: 'len'}),
-        }
+        },
       });
 
     /**
@@ -60,18 +62,18 @@ class Protocol extends EventEmitter {
       .uint8('numTlvFields')
       .array('fields', {
         type: this.tlvField,
-        length: 'numTlvFields'
+        length: 'numTlvFields',
       });
-    
+
     /**
      * @typedef {Buffer} Payload
      */
     this.payload = Parser.start()
       .buffer('payload', {
         clone: true,
-        readUntil: 'eof'
+        readUntil: 'eof',
       });
-    
+
     /**
      * @typedef {Object} Packet
      * @property {Header} header
@@ -81,11 +83,10 @@ class Protocol extends EventEmitter {
       .nest('header', {type: this.header})
       .nest({type: this.payload});
 
-   
     connection.on('message', (msg, rinfo) => {
       let packet = this.decodePacket(msg);
-      
-      let msgType = "";
+
+      let msgType = '';
       switch (packet.header.messageType) {
         case Protocol.MESSAGE_TYPES.FORWARDED_PACKET:
           msgType = 'forwardedPacket';
@@ -103,12 +104,12 @@ class Protocol extends EventEmitter {
           msgType = 'forwarderDeregistration';
           break;
         case Protocol.MESSAGE_TYPES.ROUTE_CHANGE:
-          msgType = 'routeChange'
+          msgType = 'routeChange';
           break;
       }
 
       this.emit(msgType, packet);
-    })
+    });
   }
 
 
@@ -144,10 +145,10 @@ class Protocol extends EventEmitter {
       header: {
         messageType: messageType,
         numTlvFields: fields.length,
-        fields: fields
+        fields: fields,
       },
-      payload: payload
-    }
+      payload: payload,
+    };
   }
 
   buildForwardedPacketObject(source, destination, payload) {
@@ -156,14 +157,14 @@ class Protocol extends EventEmitter {
         type: Protocol.FIELD_TYPES.DESTINATION,
         value: {
           len: destination.length,
-          destination: destination
+          destination: destination,
         },
       },
       {
         type: Protocol.FIELD_TYPES.SOURCE,
         value: {
           len: source.length,
-          source: source
+          source: source,
         },
       },
     ];
@@ -171,9 +172,9 @@ class Protocol extends EventEmitter {
     return this.buildPacketObject(
       Protocol.MESSAGE_TYPES.FORWARDED_PACKET,
       fields,
-      payload
-      );
+      payload,
+    );
   }
 }
 
-exports = module.exports = Protocol
+exports = module.exports = Protocol;

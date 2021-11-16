@@ -1,4 +1,6 @@
-const { assert, log } = require('console');
+'use strict';
+
+const { assert } = require('console');
 const dgram = require('dgram');
 const Protocol = require('flow-protocol');
 
@@ -26,17 +28,23 @@ const p = new Protocol(server);
  * @param {Packet} packet
  */
 p.on('forwardedPacket', (packet) => {
-  let dest = packet.header.fields.find(field => field.type === Protocol.FIELD_TYPES.DESTINATION).value.destination;
+  let dest = packet.header.fields.find(field => {
+    return field.type === Protocol.FIELD_TYPES.DESTINATION;
+  }).value.destination; // TODO: Refactor packet into its own class
+
   let tableEntry = routingTable.find(entry => entry.destinationString === dest);
-    
-  if (tableEntry != undefined) {
+
+
+  if (tableEntry !== undefined) {
     if (tableEntry.local) {
-      // application local to forwarder, so send the payload to localhost:${tableEntry.port}
+      // application local to forwarder
+      // so send the payload to localhost:${tableEntry.port}
       server.send(p.encodePacket(packet), tableEntry.port, 'localhost');
     } else {
-      // application on remote forwarder, so send payload to ${tableEntry.nextHop}:LISTENING_PORT
+      // application on remote forwarder
+      // so send payload to ${tableEntry.nextHop}:LISTENING_PORT
       server.send(p.encodePacket(packet), LISTENING_PORT, tableEntry.nextHop);
     }
   }
   // drop packet if destination not found in routing table
-})
+});
