@@ -5,6 +5,7 @@ const dgram = require('dgram');
 const Protocol = require('flow-protocol');
 
 const LISTENING_PORT = 51510;
+const controllerHost = 'controller';
 
 const server = dgram.createSocket('udp4');
 server.bind(LISTENING_PORT);
@@ -47,4 +48,14 @@ p.on('forwardedPacket', (packet) => {
     }
   }
   // drop packet if destination not found in routing table
+});
+
+p.on('applicationRegistration', (packet) => {
+  // just pass the packet on to the controller
+  server.send(p.encodePacket(packet), LISTENING_PORT, controllerHost);
+});
+
+p.on('applicationDeregistration', (packet) => {
+  // just pass the packet on to the controller
+  server.send(p.encodePacket(packet), LISTENING_PORT, controllerHost);
 });

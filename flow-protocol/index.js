@@ -26,6 +26,7 @@ class Protocol extends EventEmitter {
     return {
       SOURCE: 1,
       DESTINATION: 2,
+      APPLICATION_PORT: 3,
     };
   }
 
@@ -47,6 +48,7 @@ class Protocol extends EventEmitter {
         choices: {
           1: Parser.start().uint8('len').string('source', {length: 'len'}),
           2: Parser.start().uint8('len').string('destination', {length: 'len'}),
+          3: Parser.start().uint8('len').uint16('port'),
         },
       });
 
@@ -173,6 +175,33 @@ class Protocol extends EventEmitter {
       Protocol.MESSAGE_TYPES.FORWARDED_PACKET,
       fields,
       payload,
+    );
+  }
+
+  buildApplicationRegistrationPacketObject(source, port) {
+    let fields = [
+      {
+        type: Protocol.FIELD_TYPES.SOURCE,
+        value: {
+          len: source.length,
+          source: source,
+        },
+      },
+      {
+        type: Protocol.FIELD_TYPES.APPLICATION_PORT,
+        value: {
+          len: 2, // not needed, but better to specify a 16 bit (2 byte) value
+          port: port,
+        },
+      },
+    ];
+
+    const emptyPayload = Buffer.alloc(0);
+
+    return this.buildPacketObject(
+      Protocol.MESSAGE_TYPES.APPLICATION_REGISTRATION,
+      fields,
+      emptyPayload,
     );
   }
 }

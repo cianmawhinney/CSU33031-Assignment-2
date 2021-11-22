@@ -13,5 +13,11 @@ server.bind(LISTENING_PORT, () => {
 const p = new Protocol(server);
 
 p.on('applicationRegistration', (packet) => {
-  console.log(packet);
+  // pretty print the packet object
+  console.log(JSON.stringify(packet, null, 2));
+});
+
+p.on('applicationDeregistration', (packet) => {
+  // pretty print the packet object
+  console.log(JSON.stringify(packet, null, 2));
 });
