@@ -16,8 +16,7 @@ services:
     networks:
       - management
       - link_1-3
-    environment:
-      - ROUTING_TABLE_FILE=./node1
+      - link_1-4
 
   application_1:
     build:
@@ -36,9 +35,7 @@ services:
       dockerfile: forwarder/Dockerfile
     networks:
       - management
-      - link_2-3
-    environment:
-      - ROUTING_TABLE_FILE=./node2
+      - link_2-7
 
   application_2:
     build:
@@ -49,6 +46,7 @@ services:
       - DESTINATION=application_1
       - HOSTNAME=application_2
 
+
   # node 3
   forwarder_3:
     build:
@@ -57,9 +55,79 @@ services:
     networks:
       - management
       - link_1-3
-      - link_2-3
-    environment:
-      - ROUTING_TABLE_FILE=./node3
+      - link_3-5
+      - link_3-9
+
+
+  # node 4
+  forwarder_4:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_1-4
+      - link_4-5
+
+
+  # node 5
+  forwarder_5:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_3-5
+      - link_4-5
+      - link_5-6
+      - link_5-7
+      - link_5-8
+
+
+  # node 6
+  forwarder_6:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_5-6
+      - link_6-7
+
+
+  # node 7
+  forwarder_7:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_2-7
+      - link_5-7
+      - link_6-7
+      - link_7-8
+
+
+  # node 8
+  forwarder_8:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_5-8
+      - link_7-8
+
+
+  # node 9
+  forwarder_9:
+    build:
+      context: .
+      dockerfile: forwarder/Dockerfile
+    networks:
+      - management
+      - link_3-9
+
 
   # Traffic capture
   pcap:
@@ -75,5 +143,13 @@ networks:
   
   # networks being used as links between nodes in the topology
   link_1-3:
-  link_2-3:
-  # TODO: more complex topology
+  link_1-4:
+  link_2-7:
+  link_3-5:
+  link_3-9:
+  link_4-5:
+  link_5-6:
+  link_5-7:
+  link_5-8:
+  link_6-7:
+  link_7-8:
