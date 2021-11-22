@@ -2,12 +2,12 @@ FROM node:slim
 
 WORKDIR /usr/src/app
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm install
-
 # Bundle source app
 COPY . .
+
+# Install app dependencies
+WORKDIR /usr/src/app/controller
+RUN npm install
 
 EXPOSE 51510
 
