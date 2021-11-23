@@ -150,7 +150,7 @@ services:
   # Traffic capture
   pcap:
     image: corfr/tcpdump
-    network_mode: "service:forwarder_3"
+    network_mode: "service:forwarder_2"
     command: -i any -w /data/capture.pcap
     volumes:
       - "./pcap:/data"
