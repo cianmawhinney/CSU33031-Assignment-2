@@ -14,21 +14,20 @@ A protocol to forward packets between applications on different networks, with f
 
 # Project goals
 ## Part 1
-* Basic, fixed topology
-* Get a basic communication flow working
-  * Call out to the controller to get the routing table
-* First draft of the protocol
+- [x] Basic, fixed topology
+- [x] Get a basic communication flow working
+- [x] First draft of the protocol
 
 ## Part 2
-* Fully working controller
-  * protocol/interface with forwarders nailed down
-  * internal data structure for storing the state of the graph
-  * implementation of algorithm for generating routes between every forwarder and registered application
-* Support for applications registering themselves and de-registering
-* Ideally by the end of this deadline the implementation of the solution will be completely finished
+-[ ] Fully working controller
+  - [x] Protocol finalised
+  - [x] Creation of an internal data structure for storing the state of the network
+  - [ ] implementation of algorithm for generating routes between every forwarder and registered application
+- [x] Support for applications registering themselves and de-registering
+- [ ] Completely finish implementation of project
 
 ## Final Submission
-* If possible, just work on the report
+- [ ] Submission of report and all source files
 
 
 # Protocol
@@ -38,11 +37,11 @@ A protocol to forward packets between applications on different networks, with f
     * With the UDP implementation, this is can be worked out from the registration request packet, but the idea is to not be reliant on UDP features.
   * String identifier requested
 * De-registration
-  * Same as registration, but with a different message type?
+  * Same idea as registration, but with a different message type
 * Some way to let the controller know of changes to the network
-  * Should the forwarding service update its own table before telling the controller about a new application?
-    * Nah, just let the controller deal with all routing table related things, then just push out the update to all nodes.
+  * Controller should be told about any changes to the network, then will send out updated routing tables to all nodes
 * Acknowledgements
+  * Not implemented in this assignment
 * Forwarding packets with some kind of encapsulation
   * Forwarding message type
   * Source
@@ -57,13 +56,13 @@ A protocol to forward packets between applications on different networks, with f
   * (2) Application de-registration
     * Sent to its local forwarder when an application wants to remove itself from the network
   * (3) Forwarder registration
-    * **Not necessary to implement for this assignment**
     * Sent to the controller when the forwarder comes online
     * Also transmitted are a list of other forwarders that it's connected directly to
+      * Not necessary to implement for this assignment
   * (4) Forwarder de-registration
-    * **Not necessary to implement for this assignment**
     * Sent to the controller when the forwarder removes itself from the network
     * Any routes it's involved in will be removed from the controller
+      * Not necessary to implement for this assignment
   * (5) Routing table change
     * Sent by the controller
 * Number of TLV encoded fields (1 byte)
@@ -71,8 +70,10 @@ A protocol to forward packets between applications on different networks, with f
   * Encoded as TLV
     * Source is type 1
     * Destination is type 2
+    * Application port is type 3
   * These are the words picked by each application to identify themselves
 
+<!-- This section can be removed when the report is written -->
 # Components
 ## Controller
 * Needs to keep a copy of the state of the network at a minimum
