@@ -1,17 +1,20 @@
 'use strict';
 
-const { assert } = require('console');
 const dgram = require('dgram');
 const Protocol = require('flow-protocol');
 
 const LISTENING_PORT = 51510;
-const controllerHost = 'controller';
+const CONTROLLER_HOST = 'controller';
+const CONTROLLER_PORT = 51510;
 
 const server = dgram.createSocket('udp4');
-server.bind(LISTENING_PORT);
-
-const routingTableFile = process.env.ROUTING_TABLE_FILE;
-assert(typeof routingTableFile === 'string');
+server.bind(LISTENING_PORT, () => {
+  // announce the forwarder to the controller
+  let packet = p.encodePacket(
+    p.buildForwarderRegistrationPacketObject(process.env.HOSTNAME),
+  );
+  server.send(packet, CONTROLLER_PORT, CONTROLLER_HOST);
+});
 
 /**
  * The routing table for the forwarder
@@ -21,7 +24,7 @@ assert(typeof routingTableFile === 'string');
  * @constant {Number}   routingTable[].port
  * @constant {String}   routingTable[].nextHop
  */
-const routingTable = require(routingTableFile);
+let routingTable = [];
 const p = new Protocol(server);
 
 
@@ -52,10 +55,17 @@ p.on('forwardedPacket', (packet) => {
 
 p.on('applicationRegistration', (packet) => {
   // just pass the packet on to the controller
-  server.send(p.encodePacket(packet), LISTENING_PORT, controllerHost);
+  server.send(p.encodePacket(packet), LISTENING_PORT, CONTROLLER_HOST);
 });
 
 p.on('applicationDeregistration', (packet) => {
   // just pass the packet on to the controller
-  server.send(p.encodePacket(packet), LISTENING_PORT, controllerHost);
+  server.send(p.encodePacket(packet), LISTENING_PORT, CONTROLLER_HOST);
+});
+
+p.on('routeChange', (packet) => {
+  // update the route table to the one sent by the controller
+  let newTable = JSON.parse(packet.payload.toString());
+  console.log('new route table: ', newTable);
+  routingTable = newTable;
 });

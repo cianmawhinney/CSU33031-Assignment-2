@@ -13,6 +13,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_1
     networks:
       - management
       - link_1-3
@@ -33,6 +35,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_2
     networks:
       - management
       - link_2-7
@@ -52,6 +56,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_3
     networks:
       - management
       - link_1-3
@@ -64,6 +70,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_4
     networks:
       - management
       - link_1-4
@@ -75,6 +83,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_5
     networks:
       - management
       - link_3-5
@@ -89,6 +99,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_6
     networks:
       - management
       - link_5-6
@@ -100,6 +112,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_7
     networks:
       - management
       - link_2-7
@@ -113,6 +127,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_8
     networks:
       - management
       - link_5-8
@@ -124,6 +140,8 @@ services:
     build:
       context: .
       dockerfile: forwarder/Dockerfile
+    environment:
+      - HOSTNAME=forwarder_9
     networks:
       - management
       - link_3-9

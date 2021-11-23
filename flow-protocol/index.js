@@ -88,29 +88,26 @@ class Protocol extends EventEmitter {
     connection.on('message', (msg, rinfo) => {
       let packet = this.decodePacket(msg);
 
-      let msgType = '';
       switch (packet.header.messageType) {
         case Protocol.MESSAGE_TYPES.FORWARDED_PACKET:
-          msgType = 'forwardedPacket';
+          this.emit('forwardedPacket', packet);
           break;
         case Protocol.MESSAGE_TYPES.APPLICATION_REGISTRATION:
-          msgType = 'applicationRegistration';
+          this.emit('applicationRegistration', packet, rinfo.address);
           break;
         case Protocol.MESSAGE_TYPES.APPLICATION_DEREGISTRATION:
-          msgType = 'applicationDeregistration';
+          this.emit('applicationDeregistration', packet, rinfo.address);
           break;
         case Protocol.MESSAGE_TYPES.FORWARDER_REGISTRATION:
-          msgType = 'forwarderRegistration';
+          this.emit('forwarderRegistration', packet, rinfo.address);
           break;
         case Protocol.MESSAGE_TYPES.FORWARDER_DEREGISTRATION:
-          msgType = 'forwarderDeregistration';
+          this.emit('forwarderDeregistration', packet, rinfo.address);
           break;
         case Protocol.MESSAGE_TYPES.ROUTE_CHANGE:
-          msgType = 'routeChange';
+          this.emit('routeChange', packet);
           break;
       }
-
-      this.emit(msgType, packet);
     });
   }
 
@@ -202,6 +199,46 @@ class Protocol extends EventEmitter {
       Protocol.MESSAGE_TYPES.APPLICATION_REGISTRATION,
       fields,
       emptyPayload,
+    );
+  }
+
+  buildForwarderRegistrationPacketObject(source) {
+    let fields = [
+      {
+        type: Protocol.FIELD_TYPES.SOURCE,
+        value: {
+          len: source.length,
+          source: source,
+        },
+      },
+    ];
+
+    const emptyPayload = Buffer.alloc(0);
+
+    return this.buildPacketObject(
+      Protocol.MESSAGE_TYPES.FORWARDER_REGISTRATION,
+      fields,
+      emptyPayload,
+    );
+  }
+
+  buildRouteChangePacketObject(destination, routeTable) {
+    let fields = [
+      {
+        type: Protocol.FIELD_TYPES.DESTINATION,
+        value: {
+          len: destination.length,
+          destination: destination,
+        },
+      },
+    ];
+
+    const payload = Buffer.from(JSON.stringify(routeTable));
+
+    return this.buildPacketObject(
+      Protocol.MESSAGE_TYPES.ROUTE_CHANGE,
+      fields,
+      payload,
     );
   }
 }
