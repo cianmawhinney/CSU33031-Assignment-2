@@ -107,6 +107,7 @@ p.on('forwarderRegistration', (packet, forwarderIP) => {
   // add forwarder to global network view
   // have the forwarder send a packet with its hostname
   // then add its ip address to the node with that name
+  // what happens now is the new routing table will be pushed out to all nodes
 
   let forwarderName = packet.header.fields.find(field => {
     return field.type === Protocol.FIELD_TYPES.SOURCE;
@@ -115,17 +116,7 @@ p.on('forwarderRegistration', (packet, forwarderIP) => {
   let forwarder = globalNetworkView.find(el => el.name === forwarderName);
   forwarder.ip_address = forwarderIP;
 
-  globalNetworkView.forEach(forwarder => {
-    if (forwarder.ip_address) {
-      let table = calculateRoutesFromNode(globalNetworkView, forwarderName);
-      server.send(
-        p.encodePacket(p.buildRouteChangePacketObject(forwarderName, table)),
-        LISTENING_PORT,
-        forwarderIP,
-      );
-    }
-  });
-  // what happens now is the new routing table will be pushed out to all nodes
+  publishNewRouteTables(globalNetworkView);
 });
 
 p.on('forwarderDeregistration', (packet) => {
@@ -139,10 +130,13 @@ p.on('applicationRegistration', (packet, forwarderIP) => {
   // add the application name to the list of applications associated with the
   // router the request came from
 
-  // console.log('Before: ', JSON.stringify(globalNetworkView, null, 2));
-  // let forwarder = globalNetworkView.find(el => el.ip_address === forwarderIP)
-  // forwarder.applications.push('lol');
-  // console.log('After: ', JSON.stringify(globalNetworkView, null, 2));
+  let forwarder = globalNetworkView.find(el => el.ip_address === forwarderIP);
+  let applicationName = packet.header.fields.find(field => {
+    return field.type === Protocol.FIELD_TYPES.SOURCE;
+  }).value.source;
+
+  forwarder.applications.push(applicationName);
+  publishNewRouteTables(globalNetworkView);
 });
 
 p.on('applicationDeregistration', (packet) => {
@@ -150,8 +144,99 @@ p.on('applicationDeregistration', (packet) => {
   console.log(JSON.stringify(packet, null, 2));
 });
 
-function calculateRoutesFromNode(graph, nodeName) {
+function publishNewRouteTables(networkView) {
+  // filter out any forwarders which haven't registered yet
+  let validForwarders = networkView.filter(forwarder => forwarder.ip_address);
+
+  validForwarders.forEach(forwarder => {
+    let table = generateForwardingTable(networkView, forwarder.name);
+    server.send(
+      p.encodePacket(p.buildRouteChangePacketObject(forwarder.name, table)),
+      LISTENING_PORT,
+      forwarder.ip_address,
+    );
+  });
+}
+
+function generateForwardingTable(graph, sourceNodeName) {
   // calculate the next hops the node should send packets to for applications
-  // TODO: Implement this
-  return [];
+  let table = [];
+  let destinationNodes = graph.filter(forwarder => {
+    return forwarder.applications.length > 0;
+  });
+
+  destinationNodes.forEach(destinationNode => {
+    let nextHop = shortestPathNextHop(
+      graph,
+      sourceNodeName,
+      destinationNode.name,
+    );
+    let isApplicationLocal = (sourceNodeName === destinationNode.name);
+
+    destinationNode.applications.forEach(application => {
+      let entry = {
+        destinationString: application,
+        local: isApplicationLocal,
+        port: 3000,
+        nextHop: nextHop,
+      };
+      table.push(entry);
+    });
+  });
+  return table;
+}
+
+function shortestPathNextHop(graph, sourceName, destinationName) {
+  let queue = [];
+  let dist = {};
+  let prev = {};
+
+  graph.forEach(v => {
+    dist[v.name] = Infinity;
+    prev[v.name] = undefined;
+    queue.push(v.name);
+  });
+
+  dist[sourceName] = 0;
+
+  while (queue.length !== 0) {
+    let u = findMinKeyFromQueue(queue, dist);
+    // if (u === destinationName) {
+    //   break;
+    // }
+    queue = queue.filter(item => item !== u); // remove u from queue
+
+    let uNode = graph.find(node => node.name === u);
+
+    uNode.neighbours.forEach(v => {
+      // assuming the weight of each edge is 1
+      let alt = dist[u] + 1;
+      if (alt < dist[v]) {
+        dist[v] = alt;
+        prev[v] = u;
+      }
+    });
+  }
+
+  // walk back through the path to find the next hop
+  let nextHop = '';
+  let x = destinationName;
+  while (x !== sourceName) {
+    nextHop = x;
+    x = prev[x];
+  }
+  return nextHop;
+}
+
+function findMinKeyFromQueue(q, obj) {
+  let keys = [...q];
+  let minKey = keys.shift();
+  let minVal = obj[minKey];
+  keys.forEach(key => {
+    if (obj[key] < minVal) {
+      minKey = key;
+      minVal = obj[key];
+    }
+  });
+  return minKey;
 }
