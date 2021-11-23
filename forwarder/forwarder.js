@@ -67,6 +67,6 @@ p.on('applicationDeregistration', (packet) => {
 p.on('routeChange', (packet) => {
   // update the route table to the one sent by the controller
   let newTable = JSON.parse(packet.payload.toString());
-  console.log('Got new routing table from controller');
+  console.log('Got new forwarding table from controller');
   routingTable = newTable;
 });
