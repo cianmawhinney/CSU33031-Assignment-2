@@ -19,7 +19,7 @@ A protocol to forward packets between applications on different networks, with f
 - [x] First draft of the protocol
 
 ## Part 2
--[ ] Fully working controller
+- [ ] Fully working controller
   - [x] Protocol finalised
   - [x] Creation of an internal data structure for storing the state of the network
   - [ ] implementation of algorithm for generating routes between every forwarder and registered application
