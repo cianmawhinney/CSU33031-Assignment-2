@@ -46,8 +46,8 @@ const globalNetworkView = [
     ip_address: '',
     neighbours: [
       'forwarder_1',
+      'forwarder_3',
       'forwarder_5',
-      'forwarder_9',
     ],
     applications: [],
   },
@@ -76,6 +76,7 @@ const globalNetworkView = [
     name: 'forwarder_7',
     ip_address: '',
     neighbours: [
+      'forwarder_2',
       'forwarder_5',
       'forwarder_6',
       'forwarder_8',
