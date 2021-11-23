@@ -9,6 +9,7 @@ const CONTROLLER_PORT = 51510;
 
 const server = dgram.createSocket('udp4');
 server.bind(LISTENING_PORT, () => {
+  console.log('Forwarder up!');
   // announce the forwarder to the controller
   let packet = p.encodePacket(
     p.buildForwarderRegistrationPacketObject(process.env.HOSTNAME),
@@ -66,6 +67,6 @@ p.on('applicationDeregistration', (packet) => {
 p.on('routeChange', (packet) => {
   // update the route table to the one sent by the controller
   let newTable = JSON.parse(packet.payload.toString());
-  console.log('new route table: ', newTable);
+  console.log('Got new routing table from controller');
   routingTable = newTable;
 });
