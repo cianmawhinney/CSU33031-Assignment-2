@@ -19,12 +19,12 @@ A protocol to forward packets between applications on different networks, with f
 - [x] First draft of the protocol
 
 ## Part 2
-- [ ] Fully working controller
+- [x] Fully working controller
   - [x] Protocol finalised
   - [x] Creation of an internal data structure for storing the state of the network
-  - [ ] implementation of algorithm for generating routes between every forwarder and registered application
+  - [x] Implementation of algorithm for generating routes between every forwarder and registered application
 - [x] Support for applications registering themselves and de-registering
-- [ ] Completely finish implementation of project
+- [x] Completely finish implementation of project
 
 ## Final Submission
 - [ ] Submission of report and all source files
