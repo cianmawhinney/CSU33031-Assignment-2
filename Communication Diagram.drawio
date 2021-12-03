@@ -1,13 +1,13 @@
 <mxfile host="65bd71144e">
     <diagram id="QgByi6sjnc_yXqYNO68z" name="Page-1">
-        <mxGraphModel dx="1067" dy="1611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+        <mxGraphModel dx="1067" dy="761" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="uMOzMeaMOvdbB-hM3ydp-1" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="80" y="130" as="sourcePoint"/>
-                        <mxPoint x="80" y="810" as="targetPoint"/>
+                        <mxPoint x="80" y="440" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="uMOzMeaMOvdbB-hM3ydp-2" value="Time" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="uMOzMeaMOvdbB-hM3ydp-1" vertex="1" connectable="0">
@@ -15,93 +15,64 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-3" value="Application&lt;br&gt;Port 3000" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="120" y="60" width="120" height="60" as="geometry"/>
+                <mxCell id="uMOzMeaMOvdbB-hM3ydp-3" value="Application&lt;br&gt;(Port 3000)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="60" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-4" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="uMOzMeaMOvdbB-hM3ydp-3" edge="1">
+                <mxCell id="uMOzMeaMOvdbB-hM3ydp-4" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uMOzMeaMOvdbB-hM3ydp-3" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="450" y="320" as="sourcePoint"/>
-                        <mxPoint x="180" y="840" as="targetPoint"/>
+                        <mxPoint x="430" y="320" as="sourcePoint"/>
+                        <mxPoint x="160" y="440" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="uMOzMeaMOvdbB-hM3ydp-5" value="Forwarding Service&lt;br&gt;(Port 51510)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="320" y="60" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="uMOzMeaMOvdbB-hM3ydp-6" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="uMOzMeaMOvdbB-hM3ydp-5" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="650" y="320" as="sourcePoint"/>
-                        <mxPoint x="380" y="840" as="targetPoint"/>
+                        <mxPoint x="670" y="320" as="sourcePoint"/>
+                        <mxPoint x="400" y="440" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-7" value="Controller&lt;br&gt;(Port ????)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="520" y="60" width="120" height="60" as="geometry"/>
+                <mxCell id="uMOzMeaMOvdbB-hM3ydp-7" value="Controller&lt;br&gt;(Port 51510)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="60" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="uMOzMeaMOvdbB-hM3ydp-8" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="uMOzMeaMOvdbB-hM3ydp-7" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="850" y="320" as="sourcePoint"/>
-                        <mxPoint x="580" y="840" as="targetPoint"/>
+                        <mxPoint x="910" y="320" as="sourcePoint"/>
+                        <mxPoint x="640" y="440" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="uMOzMeaMOvdbB-hM3ydp-40" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;startArrow=classic;startFill=1;endFill=0;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="380" y="200" as="sourcePoint"/>
-                        <mxPoint x="180" y="160" as="targetPoint"/>
+                        <mxPoint x="400" y="200" as="sourcePoint"/>
+                        <mxPoint x="160" y="160" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-41" value="I would like to be reachable on 'node1'" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" parent="uMOzMeaMOvdbB-hM3ydp-40" vertex="1" connectable="0">
+                <mxCell id="uMOzMeaMOvdbB-hM3ydp-41" value="&quot;I would like to be reachable on 'node1',&lt;br&gt;please send any data to port 3000&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" parent="uMOzMeaMOvdbB-hM3ydp-40" vertex="1" connectable="0">
                     <mxGeometry x="0.5289" y="-2" relative="1" as="geometry">
-                        <mxPoint x="52" y="-17" as="offset"/>
+                        <mxPoint x="63" y="-27" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-45" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;startArrow=classic;startFill=1;endFill=0;" parent="1" edge="1">
+                <mxCell id="10" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;startArrow=classic;startFill=1;endFill=0;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="200" y="-280" as="sourcePoint"/>
-                        <mxPoint x="410" y="-320" as="targetPoint"/>
+                        <mxPoint x="640" y="250" as="sourcePoint"/>
+                        <mxPoint x="400" y="210" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-46" value="Publish" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" parent="uMOzMeaMOvdbB-hM3ydp-45" vertex="1" connectable="0">
+                <mxCell id="11" value="&quot;I am connected to 'node1',&lt;br&gt;which accepts data on port 3000&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" vertex="1" connectable="0" parent="10">
                     <mxGeometry x="0.5289" y="-2" relative="1" as="geometry">
-                        <mxPoint x="-111" y="-1" as="offset"/>
+                        <mxPoint x="63" y="-27" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uMOzMeaMOvdbB-hM3ydp-47" value="Payload: 123" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="uMOzMeaMOvdbB-hM3ydp-45" vertex="1" connectable="0">
-                    <mxGeometry x="-0.3396" y="2" relative="1" as="geometry">
-                        <mxPoint x="91" as="offset"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="2" value="Application&lt;br&gt;Port 3000" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="920" y="60" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="3" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="2">
+                <mxCell id="12" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;startArrow=classic;startFill=1;endFill=0;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1250" y="320" as="sourcePoint"/>
-                        <mxPoint x="980" y="840" as="targetPoint"/>
+                        <mxPoint x="400" y="365.61" as="sourcePoint"/>
+                        <mxPoint x="640" y="325.61" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="4" value="Forwarding Service&lt;br&gt;(Port 51510)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="720" y="60" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="5" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="1050" y="320" as="sourcePoint"/>
-                        <mxPoint x="780" y="840" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="7" value="Node 1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="120" width="320" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="8" value="Node 2" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="720" width="320" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="9" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;startArrow=classic;startFill=1;endFill=0;" edge="1" parent="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="780" y="240" as="sourcePoint"/>
-                        <mxPoint x="980" y="200" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="10" value="I would like to be reachable on 'node2'" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" vertex="1" connectable="0" parent="9">
+                <mxCell id="13" value="&quot;A change has occurred, please update&lt;br&gt;your routing table to this&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" vertex="1" connectable="0" parent="12">
                     <mxGeometry x="0.5289" y="-2" relative="1" as="geometry">
-                        <mxPoint x="-53" y="-21" as="offset"/>
+                        <mxPoint x="-64" y="-27" as="offset"/>
                     </mxGeometry>
                 </mxCell>
             </root>
