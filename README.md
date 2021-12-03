@@ -11,6 +11,20 @@ A protocol to forward packets between applications on different networks, with f
 * Forwarder application binds to UDP port 51510
 * UDP is only being used for convenience, the idea is that the protocol could be implemented using Ethernet frames at a later date
 
+# Running
+1. Ensure docker installed on your machine
+2. Clone this repository
+   ``` bash
+   $ git clone https://github.com/cianmawhinney/CSU33031-Assignment-2.git
+   ```
+3. Navigate into the project folder
+   ``` bash
+   $ cd CSU33031-Assignment-2
+   ```
+4. Start the docker compose setup
+   ``` bash
+   $ docker compose up
+   ```
 
 # Project goals
 ## Part 1
