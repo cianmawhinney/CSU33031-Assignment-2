@@ -86,16 +86,3 @@ A protocol to forward packets between applications on different networks, with f
     * Destination is type 2
     * Application port is type 3
   * These are the words picked by each application to identify themselves
-
-<!-- This section can be removed when the report is written -->
-# Components
-## Controller
-* Needs to keep a copy of the state of the network at a minimum
-
-
-## Application
-* Print out any data it gets
-* Generate a string and send it to another node
-
-## Forwarder
-* Drop any packets that it doesn't know where to route
