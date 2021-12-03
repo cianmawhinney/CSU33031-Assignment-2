@@ -41,7 +41,7 @@ A protocol to forward packets between applications on different networks, with f
 - [x] Completely finish implementation of project
 
 ## Final Submission
-- [ ] Submission of report and all source files
+- [x] Submission of report and all source files
 
 
 # Protocol
